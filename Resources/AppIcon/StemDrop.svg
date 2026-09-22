@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" y1="180" x2="0" y2="820">
+      <stop offset="0" stop-color="#5CF08A"/>
+      <stop offset="1" stop-color="#22B85A"/>
+    </linearGradient>
+  </defs>
+  <!-- macOS icon shape: rounded square with ~10% transparent margin -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="#000"/>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="none" stroke="#2BD46A" stroke-opacity="0.35" stroke-width="6"/>
+
+  <!-- soil line -->
+  <path d="M372 800 L652 800" fill="none" stroke="url(#g)" stroke-width="34" stroke-linecap="round"/>
+  <!-- stem -->
+  <path d="M512 800 L512 380" fill="none" stroke="url(#g)" stroke-width="38" stroke-linecap="round"/>
+
+  <!-- left leaf -->
+  <path d="M512 690 C430 690 320 640 296 545 C398 543 496 596 512 690 Z" fill="url(#g)"/>
+  <!-- right leaf -->
+  <path d="M512 590 C594 590 704 540 728 445 C626 443 528 496 512 590 Z" fill="url(#g)"/>
+  <!-- leaf midribs -->
+  <path d="M506 684 C460 640 390 590 322 556" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="9" stroke-linecap="round"/>
+  <path d="M518 584 C564 540 634 490 702 456" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- drop at the tip of the stem -->
+  <path d="M512 190 C566 268 606 314 606 372 A94 94 0 0 1 418 372 C418 314 458 268 512 190 Z" fill="url(#g)"/>
+  <ellipse cx="478" cy="362" rx="15" ry="28" transform="rotate(-20 478 362)" fill="#fff" fill-opacity="0.55"/>
+</svg>

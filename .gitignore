@@ -1,0 +1,15 @@
+.build/
+build/
+Engine/.venv/
+Engine/pbs/
+Engine/*.wav
+Engine/*.flac
+Engine/*.mp3
+Resources/engine/
+*.log
+__pycache__/
+*.pyc
+Engine/flactest
+.DS_Store
+graphify-out/
+StemDrop.app/
