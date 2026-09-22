@@ -24,7 +24,10 @@ cp "$ROOT_DIR/Resources/AppIcon.icns" "$RESOURCES_DIR/AppIcon.icns"
 
 if [ -d "$ROOT_DIR/Resources/engine" ]; then
     echo "Copying bundled engine…"
-    cp -R "$ROOT_DIR/Resources/engine" "$RESOURCES_DIR/engine"
+    mkdir -p "$RESOURCES_DIR/engine"
+    # Python bytecode records absolute build paths. Keep it out of public apps.
+    rsync -a --exclude='__pycache__/' --exclude='*.pyc' \
+        "$ROOT_DIR/Resources/engine/" "$RESOURCES_DIR/engine/"
 fi
 
 # Sign with the stable local cert if it exists so macOS keeps the app's
