@@ -19,12 +19,8 @@ enum EnginePaths {
         return packageRoot.appendingPathComponent("Resources/engine/bin/python3")
     }
 
-    /// Sources/StemDrop/Separation/EnginePaths.swift → package root.
+    /// Used when running the executable from the package directory during development.
     private static var packageRoot: URL {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // Separation
-            .deletingLastPathComponent() // StemDrop
-            .deletingLastPathComponent() // Sources
-            .deletingLastPathComponent() // package root
+        URL(fileURLWithPath: FileManager.default.currentDirectoryPath, isDirectory: true)
     }
 }

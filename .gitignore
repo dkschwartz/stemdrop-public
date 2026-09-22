@@ -13,3 +13,5 @@ Engine/flactest
 .DS_Store
 graphify-out/
 StemDrop.app/
+dist/
+dist-v2/
