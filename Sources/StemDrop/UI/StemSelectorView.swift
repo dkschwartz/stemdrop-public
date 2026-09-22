@@ -1,7 +1,6 @@
 import SwiftUI
 
-/// Six stem checkboxes in the product mock's order (Vocals, Drums, Bass,
-/// Guitar, Piano, Other), bound to the remembered selection.
+/// Model stems and three frequency-based drum detail exports.
 struct StemSelectorView: View {
     @ObservedObject var prefs: AppPreferences
 
@@ -11,6 +10,11 @@ struct StemSelectorView: View {
                 Toggle(stem.displayName, isOn: binding(for: stem))
                     .toggleStyle(.checkbox)
             }
+            Text("Kick, Snare, and Cymbals are rough frequency-based splits of the Drums stem.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 3)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)

@@ -51,6 +51,33 @@ def _emit(obj: dict) -> None:
 _QUALITY_MODEL = "htdemucs_ft"
 _SIX_STEM_MODEL = "htdemucs_6s"
 _SIX_STEM_ONLY = {"guitar", "piano"}
+_DRUM_DETAIL_STEMS = {"kick", "snare", "cymbals"}
+
+
+def _split_drum_detail(wav, sample_rate):
+    """Split the Demucs drum stem into rough low, mid, and high bands."""
+    import torch
+
+    n_fft = 4096
+    hop = 1024
+    window = torch.hann_window(n_fft, device=wav.device)
+    spectrum = torch.stft(
+        wav, n_fft=n_fft, hop_length=hop, window=window,
+        return_complex=True, center=True,
+    )
+    frequencies = torch.fft.rfftfreq(n_fft, d=1.0 / sample_rate).to(wav.device)
+    bands = {
+        "kick": frequencies <= 180.0,
+        "snare": (frequencies > 180.0) & (frequencies < 4000.0),
+        "cymbals": frequencies >= 4000.0,
+    }
+    return {
+        name: torch.istft(
+            spectrum * mask.view(1, -1, 1), n_fft=n_fft, hop_length=hop,
+            window=window, length=wav.shape[-1],
+        )
+        for name, mask in bands.items()
+    }
 
 
 def _parse_args(argv):
@@ -156,10 +183,14 @@ def main(argv=None) -> int:
 
         _, separated = separator.separate_audio_file(args.input)
 
+        detail = {}
+        if any(name in _DRUM_DETAIL_STEMS for name in stems):
+            detail = _split_drum_detail(separated["drums"], separator.samplerate)
+
         for name in stems:
-            if name not in separated:
+            wav = detail.get(name, separated.get(name))
+            if wav is None:
                 continue
-            wav = separated[name]
             out_path = os.path.join(args.out, f"{name}.wav")
             save_audio(wav, out_path, samplerate=separator.samplerate, as_float=True, bits_per_sample=32)
             _emit({"event": "stem", "name": name, "path": out_path})
